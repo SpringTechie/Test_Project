@@ -1,0 +1,68 @@
+ORM: Object Relational Mapping: The process of mapping java objects fields to database table columns.
+ORM:
+In Spring Boot, ORM (Object-Relational Mapping) is the mechanism that maps Java objects (entities) to database tables.
+Instead of writing raw SQL queries, you can work with objects, and the ORM framework translates those operations into SQL under the hood
+
+The most common ORM framework used in Spring Boot is Hibernate, which is part of JPA (Java Persistence API).
+
+In SpringBoot with the help of JPA(Java persistence API) hibernate is writing mysql related queries.
+
+Key Concepts in ORM with Spring Boot:
+
+1.JPA (Java Persistence API):
+A specification (set of interfaces and annotations) for ORM.
+Common annotations: @Entity, @Table, @Id, @Column.
+Does not provide implementation by itself.
+
+2.Hibernate:
+The most popular implementation of JPA.
+Handles the actual SQL generation and object-to-database mapping.
+
+3.Spring Data JPA:
+A Spring project that makes working with JPA/Hibernate even easier.
+Provides repositories (e.g., JpaRepository) so you don’t have to write boilerplate code.
+Hibernate properties:
+spring.jpa.hibernate.ddl-auto = update
+this property used to run the ddl commands.(create,alter etc)
+diff values:
+create:
+update:
+create-drop:
+drop:
+none:
+Some imp annotation on model class:
+
+1.@Entity:(Mandatory) By using this annotation on top of a class this tells to hibernate this is a java object that needs to be mapped to DB table.
+2.@Id:(Mandatory)  For every table in mysql has primary key, if you mark any field with @Id , then that field act as primary key in table.
+3.@Column(name = "firstName",unique = true,nullable = false):(Optional)This annotation helps to customize the column.
+4.@Table(name="usr_details")(Optional): It used to name the table manually instead of default class name.
+4.@GeneratedValue(strategy = GenerationType.IDENTITY): this generates the primary key id automatically.
+  | Strategy | How it works                 | DB Support                    | Pros                 | Cons                        |
+  | -------- | ---------------------------- | ----------------------------- | -------------------- | --------------------------- |
+  | AUTO     | Chooses automatically        | All                           | Easy, flexible       | Behavior differs per DB     |
+  | IDENTITY | Uses auto-increment column   | MySQL, PostgreSQL, SQL Server | Simple               | No batch insert efficiency  |
+  | SEQUENCE | Uses DB sequence object      | Oracle, PostgreSQL            | Fast, batch-friendly | Needs sequence support      |
+  | TABLE    | Uses extra table as sequence | All                           | Portable             | Slowest, extra table needed |
+
+In practice:
+            Use IDENTITY for MySQL.
+            Use SEQUENCE for Oracle/Postgres.
+            Use AUTO if you want Hibernate to decide.
+            Use TABLE only if you need portability across all DBs.
+
+
+JPA imp methods:
+1.  S save(S entity); Takes one object and saves to database: save(new User()).
+2.  saveAll(Iterable<S> entities): Takes collection of object and saves them to database: save(List.of(new User(1,"arun"),new User(2,"pavan"));
+3.  findById(ID id): Queries the DB based on input id. returns object.
+    SELECT * FROM hash_include_project_db.user where id = 1;
+4.  findAllById(Iterable<ID> ids): Queries the DB based on input id. returns list of object.
+5.  findAll(): fetch all rows from table.
+    SELECT * FROM hash_include_project_db.user;
+6.  deleteById(ID id): deletes row based on input id. Example: deleteById(1)
+7.  delete(T entity) ; deletes row based on object: Example: delete(new User(1,"arun"):
+8.  void deleteAllById(Iterable<? extends ID> ids): deletes rows based on input ids.
+9.  void deleteAll(Iterable<? extends T> entities): deletes rows based on objects.
+10. void deleteAll(): delete all rows inside a table.
+
+

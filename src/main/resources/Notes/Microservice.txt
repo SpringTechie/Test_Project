@@ -1,0 +1,3 @@
+MicroServices principle: independent development , independent deployment and independent of technology, independent Scaling.
+
+

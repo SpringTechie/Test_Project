@@ -1,4 +1,3 @@
-ORM: Object Relational Mapping: The process of mapping java objects fields to database table columns.
 ORM:
 In Spring Boot, ORM (Object-Relational Mapping) is the mechanism that maps Java objects (entities) to database tables.
 Instead of writing raw SQL queries, you can work with objects, and the ORM framework translates those operations into SQL under the hood
@@ -21,15 +20,7 @@ Handles the actual SQL generation and object-to-database mapping.
 3.Spring Data JPA:
 A Spring project that makes working with JPA/Hibernate even easier.
 Provides repositories (e.g., JpaRepository) so you don’t have to write boilerplate code.
-Hibernate properties:
-spring.jpa.hibernate.ddl-auto = update
-this property used to run the ddl commands.(create,alter etc)
-diff values:
-create:
-update:
-create-drop:
-drop:
-none:
+
 Some imp annotation on model class:
 
 1.@Entity:(Mandatory) By using this annotation on top of a class this tells to hibernate this is a java object that needs to be mapped to DB table.
@@ -64,5 +55,3 @@ JPA imp methods:
 8.  void deleteAllById(Iterable<? extends ID> ids): deletes rows based on input ids.
 9.  void deleteAll(Iterable<? extends T> entities): deletes rows based on objects.
 10. void deleteAll(): delete all rows inside a table.
-
-

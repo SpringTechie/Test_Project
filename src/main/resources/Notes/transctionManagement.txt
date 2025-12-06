@@ -1,0 +1,13 @@
+Transaction Management in spring boot ensures data consistency and integrity by treating a series of operations
+as single unit of work.
+If any operation  within the Transaction fails, all changes are rolled back.
+Spring boot internally supports Transaction Management, meaning we no need to add extra dependency.
+How many ways to can achieve Transaction Management?
+1.Declarative Transaction Management: is achieved by using @Transactional.
+ if we annotate class with this annotation then entire class operation treated as one unit of work.
+ if we annotate method with this annotation then entire class operation treated as one unit of work.
+To enable Transaction Management we need to add this annotation on main class.
+
+2.Programmatic Transaction Management.
+
+

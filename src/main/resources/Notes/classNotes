@@ -1,0 +1,149 @@
+1.Create Springboot project using spring intializer (https://start.spring.io/)
+2.Add the required dependencies
+3.Mysql dependency, web dependencies, spring data jpa.
+4.create a entity class in entity package.
+5. mark entity class as @Entity and add @Id on primary key field.
+6.create controller class and mark as @RestController.
+7. In controller class create api.
+8. create service class
+9. create repository class
+10.now configure some properties related to database in application properties.
+
+
+IOC Container:
+The IoC container in Spring is responsible for managing the lifecycle and dependencies of beans (Java objects). It follows the Inversion of Control principle, where the control of object creation and dependency management is shifted from the application to the container
+Types of IOC Container:
+Total two types of Ioc container
+1.BeanFactory: It is basic IOC Container.
+It is an container where object creation and managing and destruction is done here.
+It is basic container used in small application.
+It is lazy loading: It means it creates objects when it is requested.
+2.Application Context: It is advance IOC Container, it supports Internationalization(i18).
+It is an container where object creation and managing and destruction(life cycle) is done here.
+It is advance container used in large application.
+it is eager loading: It means it creates objects at the time of application starts.
+
+Scope:In Spring Boot, bean scope determines how a bean is created, shared, and managed within the application context.
+By default all beans in spring boot are singleton.
+It means wherever you request a particular object it returns the same object from container
+
+If we want to change scope of any bean we need to annotate the @Scope("Mention scope name")
+Example: @Scope("prototype")
+Prototype: Means on every request a new object is created and shared.
+
+@Scope("request") : Creates a new bean of the bean for each HTTP request.
+
+@Scope("session") : Creates a new bean per user session.
+
+
+How to get beans from container?
+to get beans from ioc we have diff methods.
+ConfigurableApplicationContext run = SpringApplication.run(CrudOperationApplication.class, args);
+ProductServiceImpl bean = run.getBean(ProductServiceImpl.class);
+How beans names are crated in IOC Container?
+ClassName => beanName
+Example:
+ProductController => productController
+ProductServiceImpl => productServiceImpl
+By passing bean  name.
+ProductServiceImpl productServiceImpl = (ProductServiceImpl)run.getBean("productServiceImpl");
+
+How to override the bean name in spring boot?
+By default beans names are className with camelCase , if we want to override the name we have name  the bean name explicitly
+in @Service("custombeanName") , This is applicable to component ,RestController ,Repository annotation.
+
+I want to do some action or execute some piece of code after application starts?
+This is can be achived by using @PostConstruct annotation.
+initialization
+The below method executed after the application context is fully initialized.
+	@PostConstruct
+	public void welcomeMessage() {
+		System.out.println("Welcome to springtechie");
+	}
+
+The below method executed just before the beans are removed from application context.
+	//clean up
+	@PreDestroy
+	public void destroy() {
+		System.out.println("Bye!!");
+	}
+
+
+What is Dependency Injection?
+It is design pattern in which an objects dependencies are provided by an external source(IOC) rather creating within the object.
+Types of Dependency Injection?
+1.Constructor Injection : The process injecting the dependencies via constructor.
+    @Autowired
+    public ProductServiceImpl(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
+2.Setter Injection : The process of injecting the dependencies via setters.
+    @Autowired
+    public void setProductRepository(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
+
+3.Field Level Injection : The process of injecting the dependencies via field.
+    @Autowired
+    private  ProductRepository productRepository;
+
+Which is most preferred injection?
+Constructor Injection is preferred over other injections.
+* Constructor injection ensures that required dependencies are injected at the time of object creation.
+It prevents the class from being instantiated in an invalid state where dependencies are null.
+* Ensures Immutability
+When dependencies are injected through the constructor, the fields can be declared final, ensuring that the injected dependencies cannot be modified after initialization.
+This promotes immutability and makes the class thread-safe.
+
+@Autowired
+public ProductController(ProductService productService, ProductServiceImpl productServiceImpl) {
+        this.productService = productService;
+        this.productServiceImpl = productServiceImpl;
+    }
+
+when we go for Setter injection?
+if we have optional dependencies in a class , meaning suppose we have a classA where it has two dependencies
+ClassB, ClassC, but you want only ClassB object to be injected , then use setter injections.
+
+    /* Setter Injection
+        @Autowired
+        public void setProductService(ProductService productService) {
+            this.productService = productService;
+        }
+
+        public void setProductServiceImpl(ProductServiceImpl productServiceImpl) {
+            this.productServiceImpl = productServiceImpl;
+        }
+       */
+
+when we go for field level injection?
+When we have single dependency in class.
+    @Autowired
+    private ProductService productService;
+
+
+
+
+Scenario: @PostConstruct
+I want perform some actions when the application is started.
+To perform this action we have to use @PostConstruct annotation on top of method that perform actions.
+it is executed once the application context is initialized.
+
+When to use?
+if you want to push some data into DB while application started.
+if you want to pull the data from db on starting.
+
+@PreDestroy:
+It is used to perform cleanup actions before the beans are removed from the application-context.
+
+
+
+What is Bean Life Cycle: In Spring boot object instantiation  and initializing and destruction are taken care by container
+1.Step: The bean is instantiated using the class's constructor (either default or parameterized).
+        Spring uses Reflection to create the bean.
+
+2.Step: After instantiating the bean, Spring injects dependencies (via setter injection or constructor injection) based on the configuration.
+
+3.step: Bean is destroyed. just before bean is removed from container.
+
+

@@ -1,0 +1,35 @@
+Global Exception Handling.
+How to handle exception?
+By using try catch block or throw or throws keyword.
+
+To handle exception in spring boot we use @ExceptionHandler annotation on top of that method and we mention
+what exception it will handle in controller.
+
+By using this controller level exception handling it is only applicable to that controller class.
+
+To solve controller level exception handling we use the Global Exception Handling.
+
+What is Global Exception Handling.?
+It is process that allows developers to handle exception occurring across the application in centralized ,
+reusable,and structured manner.
+
+This eliminates handling exception in each controller.
+
+Impl:
+We no need to add anu dependency.
+Create a class and annotate the class with @RestControllerAdvice or @ControllerAdvice
+inside that class create methods that handles specific exception and mark that exception with @ExceptionHandler
+
+
+@ControllerAdvice  :
+It is same as component thats defining global Exception logic for multiple controllers
+@RestControllerAdvice :
+Same as ControllerAdvice but automatically applies response body  to all responses ensuring json response instead of HTML pages.
+
+@ExceptionHandler:
+Used to define specific method for handling request.
+
+
+
+
+

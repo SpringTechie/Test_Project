@@ -1,0 +1,67 @@
+Before Springboot developers are used to build application using Spring Framework.
+Before Springboot we have a lot of Boilerplate code.
+What is Bean in Spring Boot?
+Ans: It is same as java Object , but which is managed(creation , initialization,deletion) by springFramework.
+The classes under the base package of project, the springboot will scan the classes and creates the objects and we must and should
+annotate @Service or @Component , @RestController, @Repository.
+
+@Service: use this on top of class which has Business Logic.
+@RestController : use this on top of class which has RestEndPoints.
+@Repository : use this on top of class which on DataAccess objects.
+@Component : It is generic annotation where we can replace @Service and @Repository.
+
+
+@Entity: It is imported from Jakarta.
+- whenever we mark this annotation on any class then springboot considers this class as a an model which we need to store in DB.
+- It is mandatory annotation.
+@Id: In every table we have primary key which defines unique for every product.
+- It is mandatory annotation.
+
+@Table(name = "Product_Details") : By default if we dont mention table name , then springboot create table in DB with className.
+if we want explicitly define tableName then use @Table annotation.
+It is optional Annotation.
+@Column(name = "productName") : It is optional annotation, where we define Column name in DB.
+
+@GeneratedValue(strategy = GenerationType.IDENTITY) :
+ It will auto generates the primary key.
+ It Optional annotation.
+
+
+SpringBoot profiles:
+
+In RealTime a application before going to prod environment , it undergoes into diff Environments such as
+DEV : for developers
+QA  : for testes
+STAGE: it is like a preprod.
+PROD: Live Environment.
+
+So for each environment we have diff configurations for example:
+for Dev env we have diff mysql db and its username and password.
+for Stage env we have diff mysql db and its username and password.
+
+To achieve this we have to use SpringBoot provides profiles which allows us to configure diff env by specifying
+separate files , beans,and configuration.
+
+Implementation:
+Create diff properties for each env like
+application-dev.properties
+application-prod.properties
+application-stage.properties
+application-qa.properties
+
+How to activate profile
+In Application properties specify this property to activate the env
+spring.profiles.active = dev
+
+if no profile is set , springBoot uses the application.properties or application.yml
+If no property overridden in env , then springBoot uses the default value from application.properties.
+
+By using profiles we can create beans by specifying env in @Profile annotation.
+Example: @Profile("dev")
+
+
+
+
+
+
+

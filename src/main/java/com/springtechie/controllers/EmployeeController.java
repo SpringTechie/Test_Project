@@ -12,8 +12,6 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
-
-
     @GetMapping("/get/employees")
     public List<Employee> getAllEmployees() {
        return employeeService.getAllUsers();
@@ -32,6 +30,18 @@ public class EmployeeController {
        return employeeService.saveEmployee(employee);
     }
 
+
+    // update the employee
+    @PutMapping("/update/emp")
+    public String updateEmployee(@RequestBody Employee employee) {
+       return employeeService.updateEmployee(employee);
+    }
+    // delete employee by id
+
+    @DeleteMapping("/delete/emp/id/{id}")
+    public String deleteById(@PathVariable int id) {
+        return employeeService.deleteEmployeeById(id);
+    }
 
 
 

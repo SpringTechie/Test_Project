@@ -1,0 +1,2 @@
+Naveen: create a new api to delete employees based given ids - IN DEV
+Pallavi: create a new api to fetch all the employees based on given ids. - IN DEV.

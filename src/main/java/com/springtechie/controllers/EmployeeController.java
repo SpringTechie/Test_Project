@@ -9,6 +9,11 @@ import java.util.List;
 
 @RestController
 public class EmployeeController {
+
+    public EmployeeController() {
+        System.out.println("EmployeeController is executed");
+    }
+
     @Autowired
     private EmployeeService employeeService;
 
@@ -16,11 +21,9 @@ public class EmployeeController {
     public List<Employee> getAllEmployees() {
        return employeeService.getAllUsers();
     }
-    // select * from employee where id = 2;
-    // http://localhost:8080/get/employee/id/2/name/arun
-    // path variable to method variable binding
+
     @GetMapping("/get/employee/id/{id}")
-    public Employee findEmployeeById(@PathVariable(name = "id") Integer empId) { // id = null
+    public Employee findEmployeeById(@PathVariable(name = "id") Integer empId) {
         return employeeService.getEmployee(empId);
     }
 

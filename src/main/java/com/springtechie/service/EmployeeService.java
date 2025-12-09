@@ -11,12 +11,16 @@ import java.util.Optional;
 @Service
 public class EmployeeService {
 
+
+    public EmployeeService() {
+        System.out.println("Employeeservice is executed");
+    }
+
     @Autowired
     private EmployeeRepository employeeRepository;
 
     public List<Employee> getAllUsers() {
-        List<Employee> empList = employeeRepository.findAll();
-        return empList;
+        return employeeRepository.findAll();
     }
 
     // to get any data based on primary key use the findById().

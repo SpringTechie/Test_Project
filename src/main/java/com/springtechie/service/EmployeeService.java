@@ -42,7 +42,7 @@ public class EmployeeService {
             return "Employee saved successfully";
         }
         else {
-            return "Failed save Employee with id" + employee.getId();
+            return "Failed save Employee with id" + employee;
         }
     }
 
@@ -61,4 +61,9 @@ public class EmployeeService {
        }
        return "Failed to update";
     }
+
+    public List<Employee> getEmployeeByIDs(List<Integer> ids) {
+        return employeeRepository.findAllById(ids);
+    }
+
 }

@@ -42,7 +42,7 @@ public class EmployeeService {
             return "Employee saved successfully";
         }
         else {
-            return "Failed save Employee with id" + employee.getId();
+            return "Failed save Employee with id" + employee;
         }
     }
 
@@ -61,4 +61,27 @@ public class EmployeeService {
        }
        return "Failed to update";
     }
+
+    public List<Employee> getEmployeeByIDs(List<Integer> ids) {
+        System.out.println("Requested Employee IDs: " + ids);
+        ids.forEach(id -> System.out.println("Fetching Employee with ID: " + id));
+        // Fetch employees first
+        List<Employee> employees = employeeRepository.findAllById(ids);
+
+
+        List<Integer> foundIds = employees.stream()
+                .map(Employee::getId)
+                .toList();
+        //Find missing IDs
+        List<Integer> missingIds = ids.stream()
+                .filter(id -> !foundIds.contains(id))
+                .toList();
+
+        if (!missingIds.isEmpty()) {
+            System.out.println("IDs not found: " + missingIds);
+        }
+
+        return employees;
+    }
+
 }

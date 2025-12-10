@@ -63,7 +63,25 @@ public class EmployeeService {
     }
 
     public List<Employee> getEmployeeByIDs(List<Integer> ids) {
-        return employeeRepository.findAllById(ids);
+        System.out.println("Requested Employee IDs: " + ids);
+        ids.forEach(id -> System.out.println("Fetching Employee with ID: " + id));
+        // Fetch employees first
+        List<Employee> employees = employeeRepository.findAllById(ids);
+
+
+        List<Integer> foundIds = employees.stream()
+                .map(Employee::getId)
+                .toList();
+        //Find missing IDs
+        List<Integer> missingIds = ids.stream()
+                .filter(id -> !foundIds.contains(id))
+                .toList();
+
+        if (!missingIds.isEmpty()) {
+            System.out.println("IDs not found: " + missingIds);
+        }
+
+        return employees;
     }
 
 }

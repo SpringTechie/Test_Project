@@ -56,10 +56,8 @@ public class EmployeeController {
     }
 
     // add bonus api
-@GetMapping("/employee/add-bonus")
-public List<EmployeeBonusDTO> getEmployeeBonus() {
-        return employeeService.getEmployeeBonus();
+    @GetMapping("/employee/add-bonus")
+    public List<EmployeeBonusDTO> getEmployeeBonus() {
+            return employeeService.getEmployeeBonus();
     }
-
-    
 }

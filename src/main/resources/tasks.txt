@@ -1,2 +1,26 @@
 Naveen: create a new api to delete employees based given ids - IN DEV
-Pallavi: create a new api to fetch all the employees based on given ids. - IN DEV.
+Pallavi:
+        1.create a new api to fetch all the employees based on given ids. - DONE
+        2.Add new field salary, index the data in db.
+        3.Write an api to fetch the all employees data add bonus to employee.
+            1.if salary is greater than 1 lakh add 5% bonus
+            2.if salary btw 50K to 1 Lakh add bonus 15% bonus
+            3.if salary is less than 50K add bonus of 20%
+            API:
+            [
+             {
+                id: 1,
+                name: arun,
+                salary:34829,
+                bonus : 4590
+
+             },
+             {
+                 id: 1,
+                 name: arun,
+                 salary:34829,
+                 bonus : 4590
+
+             }
+            ]
+

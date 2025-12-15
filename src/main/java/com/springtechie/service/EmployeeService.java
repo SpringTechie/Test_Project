@@ -86,7 +86,7 @@ public class EmployeeService {
         return employees;
     }
 //getEmployeeBonus
-public List<EmployeeBonusDTO> getEmployeeBonus(){
+    public List<EmployeeBonusDTO> getEmployeeBonus(){
     List<Employee> employees = employeeRepository.findAll();
 
     return employees.stream()
@@ -103,16 +103,16 @@ public List<EmployeeBonusDTO> getEmployeeBonus(){
             })
             .toList();
 }
-private double calculateBonus(Double salary) {
+    private double calculateBonus(Double salary) {
         if (salary == null) {
             return 0.0;
         }
-    if (salary > 100000) {
-        return salary * 0.05;
-    } else if (salary >= 50000) {
-        return salary * 0.15;
-    } else {
-        return salary * 0.20;
+        if (salary > 100000) {
+            return salary * 0.05;
+        } else if (salary >= 50000) {
+            return salary * 0.15;
+        } else {
+            return salary * 0.20;
+        }
     }
-}
 }

@@ -1,8 +1,6 @@
 package com.springtechie.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -10,7 +8,8 @@ import lombok.Data;
 @Data
 public class Employee {
     @Id
-    int id;
-    String name;
-    int age;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private String name;
+    private Integer age;
 }

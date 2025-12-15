@@ -46,6 +46,10 @@ public class EmployeeController {
         return employeeService.deleteEmployeeById(id);
     }
 
-
+    //fetch all Employees by given IDs
+    @GetMapping("/employees/byid")
+    public List<Employee> getEmployeesByIds(@RequestParam List<Integer> ids) {
+        return employeeService.getEmployeeByIDs(ids);
+    }
 
 }

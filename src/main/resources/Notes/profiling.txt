@@ -8,9 +8,9 @@ QA  : for testes
 STAGE: it is like a preprod.
 PROD: Live Environment.
 
-So for each environment we have diff configurations for example:
+So for each environment, we have diff configurations, for example:
 for Dev env we have diff mysql db and its username and password.
-for Stage env we have diff mysql db and its username and password.
+for Stage env, we have diff mysql db and its username and password.
 
 To achieve this we have to use SpringBoot provides profiles which allows us to configure diff env by specifying
 separate files , beans,and configuration.

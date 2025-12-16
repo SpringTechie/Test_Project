@@ -1,11 +1,14 @@
 package com.springtechie.controllers;
 
+import com.springtechie.dto.EmployeeBonusDTO;
 import com.springtechie.models.Employee;
 import com.springtechie.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+
 
 @RestController
 public class EmployeeController {
@@ -52,4 +55,9 @@ public class EmployeeController {
         return employeeService.getEmployeeByIDs(ids);
     }
 
+    // add bonus api
+    @GetMapping("/employee/add-bonus")
+    public List<EmployeeBonusDTO> getEmployeeBonus() {
+            return employeeService.getEmployeeBonus();
+    }
 }

@@ -3,14 +3,15 @@ package com.springtechie.service;
 import com.springtechie.dto.EmployeeBonusDTO;
 import com.springtechie.models.Employee;
 import com.springtechie.repositories.EmployeeRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class EmployeeService {
 
 
@@ -27,14 +28,15 @@ public class EmployeeService {
 
     // to get any data based on primary key use the findById().
     public Employee getEmployee(Integer id) {
-       Optional<Employee> emp =  employeeRepository.findById(id);
-        employeeRepository.findAllById(List.of(1,2));
-       if(emp.isPresent()) {
-           return emp.get();
-       }
-       else {
-           throw new RuntimeException("No Employee Found with id =" + id );
-       }
+        log.info("fetching data for employeeId= {}" ,id);
+        Optional<Employee> emp = employeeRepository.findById(id);
+        employeeRepository.findAllById(List.of(1, 2));
+        if (emp.isPresent()) {
+            log.info("Employee Found with id ={} ",id);
+        } else {
+            log.error("No Employee Found with id = {}", id);
+            throw new RuntimeException("No Employee Found with id =" + id);
+        }
 
     }
 
@@ -42,14 +44,13 @@ public class EmployeeService {
         Employee save = employeeRepository.save(employee);
         if (save != null) {
             return "Employee saved successfully";
-        }
-        else {
+        } else {
             return "Failed save Employee with id" + employee;
         }
     }
 
     public String deleteEmployeeById(int id) {
-        if(employeeRepository.existsById(id)) {
+        if (employeeRepository.existsById(id)) {
             employeeRepository.deleteById(id);
             return "Employee Deleted Successfully";
         }
@@ -58,10 +59,10 @@ public class EmployeeService {
     }
 
     public String updateEmployee(Employee employee) {
-       if( employeeRepository.save(employee) != null) {
-           return "Updated Succesfully";
-       }
-       return "Failed to update";
+        if (employeeRepository.save(employee) != null) {
+            return "Updated Succesfully";
+        }
+        return "Failed to update";
     }
 
     public List<Employee> getEmployeeByIDs(List<Integer> ids) {
@@ -80,14 +81,18 @@ public class EmployeeService {
                 .toList();
 
         if (!missingIds.isEmpty()) {
+            // TO-DO
+            // replace print statement with log.
+            // warn level
             System.out.println("IDs not found: " + missingIds);
         }
 
         return employees;
     }
-//getEmployeeBonus
-    public List<EmployeeBonusDTO> getEmployeeBonus(){
-    List<Employee> employees = employeeRepository.findAll();
+
+    //getEmployeeBonus
+    public List<EmployeeBonusDTO> getEmployeeBonus() {
+        List<Employee> employees = employeeRepository.findAll();
 
     return employees.stream()
             .map(emp -> {

@@ -3,15 +3,19 @@ package com.springtechie.controllers;
 import com.springtechie.dto.EmployeeBonusDTO;
 import com.springtechie.models.Employee;
 import com.springtechie.service.EmployeeService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
-
 @RestController
+@Slf4j
 public class EmployeeController {
+
+    @Value("${employee.rating:3}")
+    private List<Integer> rating;
 
     public EmployeeController() {
         System.out.println("EmployeeController is executed");
@@ -22,12 +26,21 @@ public class EmployeeController {
 
     @GetMapping("/get/employees")
     public List<Employee> getAllEmployees() {
+        System.out.println("rating= "+ rating);
        return employeeService.getAllUsers();
     }
 
     @GetMapping("/get/employee/id/{id}")
     public Employee findEmployeeById(@PathVariable(name = "id") Integer empId) {
-        return employeeService.getEmployee(empId);
+        long startTime = System.currentTimeMillis();
+        log.info("requested started at time {}",System.currentTimeMillis());
+        Employee employee = employeeService.getEmployee(empId);
+        log.info("requested completed at time {}",System.currentTimeMillis());
+        long endTime = System.currentTimeMillis();
+        log.info("Total time taken {}",endTime-startTime);
+        log.debug("test debug");
+        return employee;
+
     }
 
     // create a new Employee

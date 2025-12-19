@@ -24,3 +24,4 @@ Pallavi:
              }
             ]
 
+Pallavi : Add swagger annotation for every api - > DONE.

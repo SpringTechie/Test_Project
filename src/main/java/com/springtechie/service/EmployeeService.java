@@ -33,6 +33,7 @@ public class EmployeeService {
         employeeRepository.findAllById(List.of(1, 2));
         if (emp.isPresent()) {
             log.info("Employee Found with id ={} ",id);
+            return emp.get();
         } else {
             log.error("No Employee Found with id = {}", id);
             throw new RuntimeException("No Employee Found with id =" + id);

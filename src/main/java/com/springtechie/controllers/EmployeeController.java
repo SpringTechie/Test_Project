@@ -3,6 +3,10 @@ package com.springtechie.controllers;
 import com.springtechie.dto.EmployeeBonusDTO;
 import com.springtechie.models.Employee;
 import com.springtechie.service.EmployeeService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,6 +16,7 @@ import java.util.List;
 
 @RestController
 @Slf4j
+@Tag(name="Employee-Controller",description = "This controller has Employee related AP's")
 public class EmployeeController {
 
     @Value("${employee.rating:3}")
@@ -25,11 +30,16 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     @GetMapping("/get/employees")
+
     public List<Employee> getAllEmployees() {
         System.out.println("rating= "+ rating);
        return employeeService.getAllUsers();
     }
 
+    @Operation(summary = "Fetches the Employee Based on Id",description = "Pass the Employee Id")
+    @Parameter(name="id",description = "Enter Employee Id",example = "2")
+    @ApiResponse(responseCode = "200",description = "Returns employee data if found")
+    @ApiResponse(responseCode = "204",description = "Returns NO content if  Employee with Id not found")
     @GetMapping("/get/employee/id/{id}")
     public Employee findEmployeeById(@PathVariable(name = "id") Integer empId) {
         long startTime = System.currentTimeMillis();

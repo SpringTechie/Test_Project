@@ -3,11 +3,11 @@ How to handle exception?
 By using try catch block or throw or throws keyword.
 
 To handle exception in spring boot we use @ExceptionHandler annotation on top of that method and we mention
-what exception it will handle in controller.
+what exception it will handle in controller level
 
 By using this controller level exception handling it is only applicable to that controller class.
 
-To solve controller level exception handling we use the Global Exception Handling.
+To solve controller level exception handling, we use the Global Exception Handling.
 
 What is Global Exception Handling.?
 It is process that allows developers to handle exception occurring across the application in centralized ,

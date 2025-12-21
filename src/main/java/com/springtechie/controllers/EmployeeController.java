@@ -1,6 +1,7 @@
 package com.springtechie.controllers;
 
 import com.springtechie.dto.EmployeeBonusDTO;
+import com.springtechie.exceptions.EmployeeNotFoundException;
 import com.springtechie.models.Employee;
 import com.springtechie.service.EmployeeService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -10,9 +11,17 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @Slf4j
@@ -30,7 +39,6 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     @GetMapping("/get/employees")
-
     public List<Employee> getAllEmployees() {
         System.out.println("rating= "+ rating);
        return employeeService.getAllUsers();
@@ -54,19 +62,21 @@ public class EmployeeController {
     }
 
     // create a new Employee
-    @PostMapping("/save/employee")
-    public String createNewEmployee(@RequestBody Employee employee) {
-       return employeeService.saveEmployee(employee);
+    @PostMapping(path = "/save/employee",consumes = {"application/json"},produces = {"application/json"})
+    public ResponseEntity<String> createNewEmployee(@RequestBody Employee employee) {
+        MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+        headers.put(HttpHeaders.AGE, Collections.singletonList("23"));
+        HttpHeaders httpHeaders = new HttpHeaders(headers);
+        return new ResponseEntity<>(employeeService.saveEmployee(employee),httpHeaders,HttpStatusCode.valueOf(201));
     }
-
 
     // update the employee
     @PutMapping("/update/emp")
     public String updateEmployee(@RequestBody Employee employee) {
        return employeeService.updateEmployee(employee);
     }
-    // delete employee by id
 
+    // delete employee by id
     @DeleteMapping("/delete/emp/id/{id}")
     public String deleteById(@PathVariable int id) {
         return employeeService.deleteEmployeeById(id);
@@ -83,4 +93,18 @@ public class EmployeeController {
     public List<EmployeeBonusDTO> getEmployeeBonus() {
             return employeeService.getEmployeeBonus();
     }
+
+    // RequestParam annotation.
+    @GetMapping("get/allorone/emp/data")
+    public ResponseEntity<List<Employee>> employeeData(@RequestParam(required = false) Integer id) {
+        List<Employee> emps = employeeService.emps(id);
+        if(emps.isEmpty()) {
+            HttpStatusCode httpStatusCode = HttpStatusCode.valueOf(204);
+            return new ResponseEntity<>(emps,httpStatusCode);
+        }
+        HttpStatusCode httpStatusCode = HttpStatusCode.valueOf(200);
+        return new ResponseEntity<>(emps,httpStatusCode);
+
+    }
+
 }

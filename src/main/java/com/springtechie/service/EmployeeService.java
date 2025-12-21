@@ -1,12 +1,14 @@
 package com.springtechie.service;
 
 import com.springtechie.dto.EmployeeBonusDTO;
+import com.springtechie.exceptions.EmployeeNotFoundException;
 import com.springtechie.models.Employee;
 import com.springtechie.repositories.EmployeeRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,7 +38,7 @@ public class EmployeeService {
             return emp.get();
         } else {
             log.error("No Employee Found with id = {}", id);
-            throw new RuntimeException("No Employee Found with id =" + id);
+            throw new EmployeeNotFoundException("No Employee Found with id =" + id);
         }
 
     }
@@ -120,5 +122,19 @@ public class EmployeeService {
         } else {
             return salary * 0.20;
         }
+    }
+
+    public List<Employee> emps(Integer id) {
+        if(id != null) {
+            Optional<Employee> emp = employeeRepository.findById(id);
+           if(emp.isPresent()) {
+               return List.of(emp.get());
+           }
+        }
+         else {
+            return employeeRepository.findAll();
+        }
+         return Collections.emptyList();
+
     }
 }

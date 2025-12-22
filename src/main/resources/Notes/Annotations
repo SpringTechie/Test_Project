@@ -1,0 +1,78 @@
+Some Important annotations and points
+-- Table Related Annotation --
+@Entity : To inform hibernate to create and treat as database table. (It is mandatory annotations)
+@Table(name = "emp_details") : if we don't specify this annotation, hibernate automatically creats table with className(in lowe case)
+, if we want explicitly to define the name of table Use this annotations. (Optional annotation)
+
+@Id : For every table we have primary key , we have to use this annotation for mention as primary key.((It is mandatory annotations)
+@GeneratedValue(strategy = GenerationType.IDENTITY) : (Optional annotation)
+    this generates the id value of the table automatically by increment 1 every time.
+@Column(name = "emp_id") : use this annotation to specify name of the column in database(Optional).
+
+@Bean : is same as object, but creating and managing , destroying object is taken care by spring.
+@Service : To mark this class a  spring to bean , manage and delete object. Use this annotation on top of the class which has business logic.
+@Component: IT is same as @Service annotation, but more generic.(A class which contains non-business logic).
+@Repository: It is same as above two, but use this on the class which interacts with DB.
+
+
+@Autowired : The process of injecting  one object into another class.
+Example: ClassA need classB object , then spring will pull classB object from container and injecting into the classA.
+It can be done in three ways:
+1.Constructor Dependency Injection (It is most preferable)
+2.Field level Dependency Injection.
+3.Setter level Dependency Injection.
+
+IOC: the process creating and managing and deleting the object is taken care by spring itself.
+All objects are created at the time of application start and stored in Ioc container.
+
+@RestController: This entry of request that contains api's. this returns json data.
+@RestController:  @Controller + @ResponseBody
+Example :  @GetMapping("/get")
+              public String test() {
+                return "Hello";
+              }
+
+    output = Hello
+
+@Controller: This is same RestController, but it returns one html page.
+
+Example: @GetMapping("/get")
+            public String test() {
+              return "Hello";
+            }
+            // it returns Hello.html page
+
+
+How do we know where annotations applicable?
+Annotations are always starts with Capital letter.
+There are two annotation that tells where and when annotation written.
+@Target({ElementType.TYPE, ElementType.METHOD}) : This tells where we can write annotation(either method,field,constructor,class,interface,enum)
+if
+1. TYPE : It is applicable on class and interface
+2. FIELD : Field declaration
+3. METHOD : On method
+4. PARAMETER : it applicable on method argument.
+5. CONSTRUCTOR : On constructor
+6. <complete this> and write example for each type.
+
+@Retention(RetentionPolicy.RUNTIME): This tells when this should act.
+
+    /**
+     * Annotations are to be discarded by the compiler.
+     */
+    SOURCE,
+
+    /**
+     * Annotations are to be recorded in the class file by the compiler
+     * but need not be retained by the VM at run time.  This is the default
+     * behavior.
+     */
+    CLASS,
+
+    /**
+     * Annotations are to be recorded in the class file by the compiler and
+     * retained by the VM at run time, so they may be read reflectively.
+     *
+     * @see java.lang.reflect.AnnotatedElement
+     */
+    RUNTIME

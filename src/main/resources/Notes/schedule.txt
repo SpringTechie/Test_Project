@@ -1,0 +1,17 @@
+Scheduling in SpringBoot.
+Scheduler : If we want run any task for every onr hr or 5 secs or every day we need have to create scheduler job.
+
+To Enable Scheduling in spring we need to annotate @EnableScheduling on top of main class.
+Now create a class and write a method inside that class and annotate @Scheduled(fixedDelay = 5000) on top of that method.
+
+1.FixedRate: Executes the task at a fixed interval from the start time of previous execution regardless of how long the
+previous task took.
+@Scheduled(fixedRate = 5000,initialDelay = 10000)
+Use Case: Useful when you need tasks to run at consistency frequency.
+
+2.FixedDelay:
+Execute the task with fixed delay after the previous task complete.
+UseCase: Useful when you want to ensure a delay after task completion.
+@Scheduled(fixedDelay = 5000,initialDelay = 10000)
+
+initialDelay : While starting the application it force job to wait for some time.

@@ -1,0 +1,109 @@
+Spring boot comes with autoconfiguration.
+autoconfiguration: Based on classpath jars spring boot creates the configure beans.
+@EnableAutoConfiguration : by this annotation spring does Configuration.
+
+Who exactly creates objects and and where exactly objects created?
+IOC: Inversion of Control:  It follows the Inversion of Control principle, where the control of object creation and dependency management is shifted from the application to the container.
+
+IOc container are two types:
+1.Bean Factory: It is simple container used to build small application.
+This is lazy container meaning these creates objects when bean is needed.
+2.Application Context: This is advance container comes with additional features like internalization(i18) etc.
+This is eager container meaning at the time application starting all beans are created in ioc.
+
+By default, all beans scope are singleton.
+All beans in spring boot are singleton by default.
+if we want to change the scope of bean, annotate the @Scope("prototype")
+
+//		EmployeeController employeeController = (EmployeeController)run.getBean("employeeController");
+//		System.out.println(employeeController.hashCode());
+//		EmployeeController employeeController1 = (EmployeeController)run.getBean("employeeController");
+//		System.out.println(employeeController1.hashCode());
+//
+//		EmployeeService employeeService = (EmployeeService)run.getBean("employeeService");
+//		System.out.println(employeeService.hashCode());
+//		EmployeeService employeeService1 = (EmployeeService)run.getBean("employeeService");
+//		System.out.println(employeeService1.hashCode());
+
+
+How beans names are created in ioc?
+Bean names are in camelcase of classNames.
+EmployeeController : bean name in ioc is "employeeController"
+
+
+Dependency Injection: It is a design pattern in which object dependencies are provided by an external source(IOC) rather creating within the class itself.
+
+It can be done in three ways:
+1.Constructor Injection : DI uses @Autowired annotation directly on a Constructor.
+    @Autowired
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
+2.Setter Injection : DI uses @Autowired annotation directly on a setter.
+    @Autowired
+    public void setEmployeeService(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
+3.Field injection : DI uses @Autowired annotation directly on a field.
+ex:     @Autowired
+        private final EmployeeService employeeService;
+
+What if my class has these types of DI's?
+If we have three types of DI's first spring will priority to constructor,
+then it goes to field level injection, overrides the constructor injection object and
+then it goes to setter injection overrides the field level injection.
+
+Bean Scope:It tells how object is created inside the container
+1.Singleton: Only one object created for entire application. By default, all spring beans are Singleton.
+2.Prototype: creates new Object for every request.
+  if you want to change the scope of any bean , this can be done by @Scope annotation pass scope type as argument
+  @Scope("prototype")
+3.Session : for entire user session one object is created.
+4.Request: for http request it creates new object.
+5.Servlet: one object servlet session.
+
+
+Till now, we have learned the beans are created by Ioc container principle.
+What if I want to create a bean and inject it into IOC container.
+
+How many we can create bean in SpringBoot?
+1. Annotation Based : If we mark any class with these annotations like @Service,@Component,@RestController,@Controller,@Repository then beans are automatically created inside IOC Container.
+2. Java Based bean : To do these we have to create one class mark that class with @Configuration and create a method that returns object and mark that method with @Bean.
+   @Configuration  : If we mark this on class, it indicates that this class has beans.
+   @Bean : This tells this is an object.
+   To change the scope : we need to annotate @Scope("prototype") on that method
+   If we want fine grain control over the object creation then go for Java Based Configuration.
+
+3. XML based bean : It is used spring framework.
+
+
+
+How do you change tomcat server to jetty server?
+By default, application starts on tomcat server on port 8080.
+To change the server from tomcat to jetty , we need to do this:-
+1.exclude tomcat dependency from the web dependency.
+   <dependency>
+   			<groupId>org.springframework.boot</groupId>
+   			<artifactId>spring-boot-starter-web</artifactId>
+   			<exclusions>
+   				<exclusion>
+   					<groupId>org.springframework.boot</groupId>
+   					<artifactId>spring-boot-starter-tomcat</artifactId>
+   				</exclusion>
+   			</exclusions>
+   		</dependency>
+2. Add the jetty server dependency
+   <dependency>
+   			<groupId>org.springframework.boot</groupId>
+   			<artifactId>spring-boot-starter-jetty</artifactId>
+   		</dependency>
+
+How to change port number of server.
+By adding one property inside the application.property file
+server.port = 9090
+
+What if server.port = 0 ?
+The application starts on some random available port.
+
+What if server.port = -1?
+Application starts but it won't deploy in server. It wont accept http request.

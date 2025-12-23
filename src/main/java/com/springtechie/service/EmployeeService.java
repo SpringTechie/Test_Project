@@ -6,6 +6,7 @@ import com.springtechie.models.Employee;
 import com.springtechie.repositories.EmployeeRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;

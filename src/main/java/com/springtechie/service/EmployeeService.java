@@ -6,7 +6,9 @@ import com.springtechie.models.Employee;
 import com.springtechie.repositories.EmployeeRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -30,6 +32,7 @@ public class EmployeeService {
     }
 
     // to get any data based on primary key use the findById().
+    @Cacheable(key = "#id",value = "emptable")
     public Employee getEmployee(Integer id) {
         log.info("fetching data for employeeId= {}" ,id);
         Optional<Employee> emp = employeeRepository.findById(id);
@@ -53,6 +56,7 @@ public class EmployeeService {
         }
     }
 
+   @CacheEvict(key = "#id",value = "emptable")
     public String deleteEmployeeById(int id) {
         if (employeeRepository.existsById(id)) {
             employeeRepository.deleteById(id);
@@ -62,11 +66,11 @@ public class EmployeeService {
 
     }
 
-    public String updateEmployee(Employee employee) {
-        if (employeeRepository.save(employee) != null) {
-            return "Updated Succesfully";
-        }
-        return "Failed to update";
+    @CachePut(value = "emptable",key = "#employee.id")
+    public Employee updateEmployee(Employee employee) {
+        Employee emp = employeeRepository.save(employee);
+        return  emp;
+
     }
 
     public List<Employee> getEmployeeByIDs(List<Integer> ids) {

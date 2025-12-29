@@ -1,7 +1,6 @@
 package com.springtechie.controllers;
 
 import com.springtechie.dto.EmployeeBonusDTO;
-import com.springtechie.exceptions.EmployeeNotFoundException;
 import com.springtechie.models.Employee;
 import com.springtechie.service.EmployeeService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,15 +13,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @Slf4j
@@ -57,7 +53,6 @@ public class EmployeeController {
         log.info("requested completed at time {}",System.currentTimeMillis());
         long endTime = System.currentTimeMillis();
         log.info("Total time taken {}",endTime-startTime);
-        log.debug("test debug");
         return employee;
 
     }
@@ -74,7 +69,8 @@ public class EmployeeController {
     // update the employee
     @PutMapping("/update/emp")
     public String updateEmployee(@RequestBody Employee employee) {
-       return employeeService.updateEmployee(employee);
+        employeeService.updateEmployee(employee);
+        return "Updated Successfully";
     }
 
     // delete employee by id

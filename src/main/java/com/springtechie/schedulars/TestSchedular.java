@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class TestSchedular {
 
-    @Scheduled(fixedDelay = 3000)
+    //@Scheduled(fixedDelay = 3000)
     public void test() {
         System.out.println("Hello Test" + System.currentTimeMillis());
     }

@@ -4,7 +4,15 @@ What is use of cache?
 By using cache, we can improve api performance(response time) and decrease main db load.
 How to implement cache?
 Here I am going to use redis cache:
-Add the redis dependency
+Add the redis dependency:
+<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-cache</artifactId>
+		</dependency>
 Annotate the main class with @EnableCaching application to enable the cache.
 @Cacheable Workflow
 📌 This workflow explains how @Cacheable works when fetching data.

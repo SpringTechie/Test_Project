@@ -12,8 +12,9 @@ public class DemoController {
     @Autowired
     private Task task;
     @GetMapping("/get/id/")
-    public void findEmployeeById() {
+    public String findEmployeeById() throws InterruptedException {
         task.test();
         System.out.println("test");
+        return "job is running in the background";
     }
 }
